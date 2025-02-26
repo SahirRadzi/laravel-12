@@ -2,13 +2,25 @@
 
 namespace App\Http\Controllers;
 
+//import model product
 use App\Models\Product;
+
+//import return type View
 use Illuminate\View\View;
-use Illuminate\Http\Request;
+
+//import return type redirectResponse
 use Illuminate\Http\RedirectResponse;
+
+//import Http Request
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index() : View
     {
         //get all products
@@ -18,13 +30,17 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
+    /**
+     * create
+     *
+     * @return View
+     */
     public function create(): View
     {
         return view('products.create');
     }
 
-
-     /**
+    /**
      * store
      *
      * @param  mixed $request
@@ -43,7 +59,7 @@ class ProductController extends Controller
 
         //upload image
         $image = $request->file('image');
-        $image->storeAs('products', $image->hashName());
+        $image->storeAs('public/products', $image->hashName());
 
         //create product
         Product::create([
@@ -58,4 +74,18 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
+    /**
+     * show
+     *
+     * @param  mixed $id
+     * @return View
+     */
+    public function show(string $id): View
+    {
+        //get product by ID
+        $product = Product::findOrFail($id);
+
+        //render view with product
+        return view('products.show', compact('product'));
+    }
 }
