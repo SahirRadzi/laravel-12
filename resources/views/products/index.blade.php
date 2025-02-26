@@ -37,7 +37,7 @@
                                             <img src="{{ asset('/storage/products/'.$product->image) }}" class="rounded" style="width: 150px">
                                         </td>
                                         <td>{{ $product->title }}</td>
-                                        <td>{{ "Rp " . number_format($product->price,2,',','.') }}</td>
+                                        <td>{{ "RM " . number_format($product->price,2,',','.') }}</td>
                                         <td>{{ $product->stock }}</td>
                                         <td class="text-center">
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('products.destroy', $product->id) }}" method="POST">
